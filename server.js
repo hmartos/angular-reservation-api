@@ -20,7 +20,7 @@ var mongoose = require('mongoose');
 var cors = require('cors');
 
 
-mongoose.connect('mongodb://localhost:27017/reservation'); // connect to our database
+mongoose.connect('mongodb://localhost:27017/reservations'); // connect to our database
 var Reservation = require('./app/models/reservation'); //Schema
 
 //CORS
@@ -42,47 +42,103 @@ router.route('/availableHours')
 
     //Get list of available hours for selected date
     .get(function (req, res) {
-        /*Reservation.findById(req.params.bear_id, function(err, bear) {
-         if (err)
-         res.send(err);
-         res.json(bear);
-         });*/
-        //TODO Hector 05/02/2016 Buscar las horas disponibles para la fecha seleccionada en la base de datos
-        var selectedDate = req.params.selectedDate;
+        var selectedDate = req.query.selectedDate;
         console.log("Selected date: " + selectedDate);
 
-        //Hardcoded data
-        var response = {};
-        response.availableHours = ["10:00", "10.30", "11.30", "12.30", "13.00", "17.00", "17.30", "18.00", "18.30", "19.00"];
-        //response.availableHours = [];
-        response.level = "SUCCESS";
-        response.message = "";
-        res.json(response);
+        Reservation.findOne({}).
+            where('date').equals(selectedDate).
+            sort('hour'). //TODO Check if this sort is working
+            lean().
+            exec(function (err, schedule) {
+                //TODO Error Handler
+                if (err) return handleError(err);
+
+                console.log("Schedule for selected date: " + JSON.stringify(schedule));
+                var response = {};
+                response.availableHours = [];
+
+                if (schedule) {
+                    var notAvailableCount = 0;
+                    for (var i = 0; i < schedule.hours.length; i++) {
+                        var hour = schedule.hours[i];
+
+                        if (hour.available) {
+                            response.availableHours.push(hour.hour);
+
+                        } else {
+                            notAvailableCount++;
+                        }
+                    }
+
+                    if (notAvailableCount === schedule.hours.length) {
+                        //No available hours for selected date
+                        console.log("No available hours for selected date");
+                        //response.level = "WARNING";
+                        response.level = "SUCCESS";
+                        response.message = "noAvailableHoursForSelectedDate";
+
+                    } else {
+                        //Available hours for selected date
+                        console.log("Available hours for selected date: " + JSON.stringify(response.availableHours));
+                        response.level = "SUCCESS";
+                        response.message = "";
+                    }
+
+                } else {
+                    //No schedule for selected date
+                    console.log("No available schedule for selected date");
+                    //response.level = "ERROR";
+                    response.level = "SUCCESS";
+                    response.message = "noAvailableScheduleForSelectedDate";
+                }
+
+                res.json(response);
+            });
     })
 
 router.route('/reserve')
 
     //Get list of available hours for selected date
     .post(function (req, res) {
-        /*Reservation.findById(req.params.bear_id, function(err, bear) {
-         if (err)
-         res.send(err);
-         res.json(bear);
-         });*/
-        //TODO Hector 05/02/2016 Buscar las horas disponibles para la fecha seleccionada en la base de datos
         var selectedDate = req.body.selectedDate;
         var selectedHour = req.body.selectedHour;
         var userData = req.body.userData;
 
         console.log("Selected date: " + selectedDate);
         console.log("Selected hour: " + selectedHour);
-        console.log("User data: " + userData);
+        console.log("User data: " + JSON.stringify(userData));
 
-        //Hardcoded data
-        var response = {};
-        response.level = "SUCCESS";
-        response.message = "";
-        res.json(response);
+        Reservation.findOne({}).
+            where('date').equals(selectedDate).
+            sort('hour'). //TODO Check if this sort is working
+            exec(function (err, schedule) {
+                //TODO Error Handler
+                if (err) return handleError(err);
+
+                console.log("Schedule for selected date: " + JSON.stringify(schedule));
+                var response = {};
+
+                for (var i = 0; i < schedule.hours.length; i++) {
+                    var hour = schedule.hours[i];
+
+                    if (hour.hour === selectedHour) {
+                        hour.available = false;
+                        hour.userData = userData;
+
+                        schedule.save(function (err, updatedSchedule) {
+                            //TODO Error Handler
+                            if (err) return handleError(err);
+
+                            console.log("Reservation for date: " + selectedDate + " at hour: " + selectedHour + ". Updated schedule: " + JSON.stringify(updatedSchedule));
+                        });
+
+                        response.level = "SUCCESS";
+                        response.message = "";
+                    }
+                }
+
+                res.json(response);
+            });
     })
 
 
