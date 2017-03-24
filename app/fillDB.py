@@ -7,13 +7,8 @@ import pymongo
 import json
 
 # DEVELOPMENT
-# mongoUri = "mongodb://127.0.0.1:27017"
-# dbName = "reservations"
-# collectionName = "reservations"
-
-# PRODUCTION
-mongoUri = "mongodb://mean-hector.rhcloud.com:27017"
-dbName = "mean"
+mongoUri = "mongodb://localhost:27017"
+dbName = "reservations"
 collectionName = "reservations"
 
 file = open('./fillDB.json', 'w+')
@@ -44,6 +39,6 @@ for single_date in dateRange(start_date, end_date):
         "hours": hourRange()
 
     }
-    #collection.insert_one(document)
+    collection.insert_one(document)
     print >>file, document
 print "DB correctly filled"
