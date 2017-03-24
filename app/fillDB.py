@@ -6,9 +6,21 @@ from datetime import timedelta, date
 import pymongo
 import json
 
-client = pymongo.MongoClient("mongodb://127.0.0.1:27017")
-db = client["reservations"]
-collection = db["reservations"]
+# DEVELOPMENT
+# mongoUri = "mongodb://127.0.0.1:27017"
+# dbName = "reservations"
+# collectionName = "reservations"
+
+# PRODUCTION
+mongoUri = "mongodb://mean-hector.rhcloud.com:27017"
+dbName = "mean"
+collectionName = "reservations"
+
+file = open('./fillDB.json', 'w+')
+
+client = pymongo.MongoClient(mongoUri)
+db = client[dbName]
+collection = db[collectionName]
 
 def dateRange(start_date, end_date):
     for n in range(int ((end_date - start_date).days)):
@@ -32,5 +44,6 @@ for single_date in dateRange(start_date, end_date):
         "hours": hourRange()
 
     }
-    collection.insert_one(document)
+    #collection.insert_one(document)
+    print >>file, document
 print "DB correctly filled"
