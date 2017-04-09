@@ -47,10 +47,9 @@ router.route('/availableHours')
 
         Reservation.findOne({}).
             where('date').equals(selectedDate).
-            sort('hour'). //TODO Check if this sort is working
+            sort('hour').
             lean().
             exec(function (err, schedule) {
-                //TODO Error Handler
                 if (err) return handleError(err);
 
                 console.log("Schedule for selected date: " + JSON.stringify(schedule));
@@ -110,9 +109,8 @@ router.route('/reserve')
 
         Reservation.findOne({}).
             where('date').equals(selectedDate).
-            sort('hour'). //TODO Check if this sort is working
+            sort('hour').
             exec(function (err, schedule) {
-                //TODO Error Handler
                 if (err) return handleError(err);
 
                 console.log("Schedule for selected date: " + JSON.stringify(schedule));
@@ -126,14 +124,13 @@ router.route('/reserve')
                         hour.userData = userData;
 
                         schedule.save(function (err, updatedSchedule) {
-                            //TODO Error Handler
                             if (err) return handleError(err);
 
                             console.log("Reservation for date: " + selectedDate + " at hour: " + selectedHour + ". Updated schedule: " + JSON.stringify(updatedSchedule));
                         });
 
                         response.level = "SUCCESS";
-                        response.message = "";
+                        response.message = "See you soon!";
                     }
                 }
 
@@ -144,6 +141,12 @@ router.route('/reserve')
 
 // REGISTER OUR ROUTES -------------------------------
 app.use('/api', router);
+
+// ERROR HANDLER
+function handleError(err) {
+    console.log("An error occurred. Log trace: ");
+    console.log(err);
+}
 
 // START THE SERVER
 // =============================================================================
