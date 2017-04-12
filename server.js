@@ -72,22 +72,22 @@ router.route('/availableHours')
                     if (notAvailableCount === schedule.hours.length) {
                         //No available hours for selected date
                         console.log("No available hours for selected date");
-                        //response.level = "WARNING";
-                        response.level = "SUCCESS";
+                        //response.status = "WARNING";
+                        response.status = "SUCCESS";
                         response.message = "noAvailableHoursForSelectedDate";
 
                     } else {
                         //Available hours for selected date
                         console.log("Available hours for selected date: " + JSON.stringify(response.availableHours));
-                        response.level = "SUCCESS";
+                        response.status = "SUCCESS";
                         response.message = "";
                     }
 
                 } else {
                     //No schedule for selected date
                     console.log("No available schedule for selected date");
-                    //response.level = "ERROR";
-                    response.level = "SUCCESS";
+                    //response.status = "ERROR";
+                    response.status = "SUCCESS";
                     response.message = "noAvailableScheduleForSelectedDate";
                 }
 
@@ -129,7 +129,7 @@ router.route('/reserve')
                             console.log("Reservation for date: " + selectedDate + " at hour: " + selectedHour + ". Updated schedule: " + JSON.stringify(updatedSchedule));
                         });
 
-                        response.level = "SUCCESS";
+                        response.status = "SUCCESS";
                         response.message = "See you soon!";
                     }
                 }
