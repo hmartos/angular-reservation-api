@@ -1,0 +1,88 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Angular Reservation",
+		"_postman_id": "043fc346-3fbf-febc-4aa7-d2d37832bd8a",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "availableHours",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"//Status code is 200",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"//Response has correct JSON schema",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"tests[\"Response JSON object has property 'availableHours'\"] = jsonData.hasOwnProperty('availableHours');",
+							"tests[\"Response JSON object has property 'status'\"] = jsonData.hasOwnProperty('status');",
+							"tests[\"Response JSON object has property 'message'\"] = jsonData.hasOwnProperty('message');"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{API-URL}}/availableHours?selectedDate=2017-03-22",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"selectedDate\": \"06/03/2016\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "reserve",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"//Status code is 200",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"//Response has correct JSON schema",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"tests[\"Response JSON object has property 'status'\"] = jsonData.hasOwnProperty('status');",
+							"tests[\"Response JSON object has property 'message'\"] = jsonData.hasOwnProperty('message');"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{API-URL}}/reserve",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"selectedDate\": \"2017-03-22\", \"selectedHour\": \"10:00\", \"userData\": {\"name\": \"Héctor\", \"phone\": \"676310552\", \"email\": \"hectormartosg\"}}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
