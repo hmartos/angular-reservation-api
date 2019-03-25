@@ -102,4 +102,4 @@ _Include selected date, selected data and user data._
 
 ## Testing the API
 
-Test your API using [Postman](https://www.getpostman.com/) and the included `angular-reservation.postman_collection.json`
+Test your API using exported [Postman](https://www.getpostman.com/) collection and environment executing `npm test`

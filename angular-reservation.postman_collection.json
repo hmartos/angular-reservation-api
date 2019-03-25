@@ -1,8 +1,7 @@
 {
 	"info": {
-		"name": "Angular Reservation",
 		"_postman_id": "043fc346-3fbf-febc-4aa7-d2d37832bd8a",
-		"description": "",
+		"name": "Angular Reservation",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -35,7 +34,10 @@
 						"value": "application/json"
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "{{API-URL}}/availableDates",
 					"host": [
@@ -44,8 +46,7 @@
 					"path": [
 						"availableDates"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -55,7 +56,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"type": "text/javascript",
+						"id": "552acf6d-7ad1-475c-9519-3c642759c1b6",
 						"exec": [
 							"//Status code is 200",
 							"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -66,7 +67,8 @@
 							"tests[\"Response JSON object has property 'availableHours'\"] = jsonData.hasOwnProperty('availableHours');",
 							"tests[\"Response JSON object has property 'status'\"] = jsonData.hasOwnProperty('status');",
 							"tests[\"Response JSON object has property 'message'\"] = jsonData.hasOwnProperty('message');"
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -80,10 +82,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"selectedDate\": \"06/03/2016\"}"
+					"raw": ""
 				},
 				"url": {
-					"raw": "{{API-URL}}/availableHours?selectedDate=2017-03-22",
+					"raw": "{{API-URL}}/availableHours?selectedDate=2019-03-25",
 					"host": [
 						"{{API-URL}}"
 					],
@@ -93,11 +95,10 @@
 					"query": [
 						{
 							"key": "selectedDate",
-							"value": "2017-03-22"
+							"value": "2019-03-25"
 						}
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -107,7 +108,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"type": "text/javascript",
+						"id": "595daccb-cae7-4782-ac68-14e05f72b6cc",
 						"exec": [
 							"//Status code is 200",
 							"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -117,7 +118,8 @@
 							"",
 							"tests[\"Response JSON object has property 'status'\"] = jsonData.hasOwnProperty('status');",
 							"tests[\"Response JSON object has property 'message'\"] = jsonData.hasOwnProperty('message');"
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -131,7 +133,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"selectedDate\": \"2017-03-22\", \"selectedHour\": \"10:00\", \"userData\": {\"name\": \"Héctor\", \"phone\": \"676310552\", \"email\": \"hectormartosg\"}}"
+					"raw": "{\"selectedDate\": \"2019-03-25\", \"selectedHour\": \"10:00\", \"userData\": {\"name\": \"Héctor\", \"phone\": \"676310552\", \"email\": \"hectormartosg\"}}"
 				},
 				"url": {
 					"raw": "{{API-URL}}/reserve",
@@ -141,8 +143,7 @@
 					"path": [
 						"reserve"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		}
