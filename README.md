@@ -15,13 +15,18 @@ This project is a REST API implementation example for [angular-reservation]() mo
 
 ## Database initialization
 
-There is a Python script to create a simple database schema. Edit hours, start date, end date and execute:
-`python fillDb.py`
+There is a Python script to initialize database with a schedule for 10 years. Edit start date, end date and time slots in the script and execute
 
-## REST API Specification
+```bash
+cd app
+pip install timedelta pymongo json date
+python fillDb.py
+```
 
-**Get available hours for selected date**
-----
+## REST API Specification
+
+### Get available hours for selected date
+
   _Called on select date, return the list of available hours for selected date._
 
 * **URL**
@@ -59,8 +64,8 @@ There is a Python script to create a simple database schema. Edit hours, start d
 ```
 
 
-**Reserve hour for selected date**
-----
+### Reserve hour for selected date
+
   _Called on reserve action. Reserve selected hour from list of available hours for selected date passing user data._
 
 * **URL**
@@ -97,6 +102,4 @@ _Include selected date, selected data and user data._
 
 ## Testing the API
 
-Test your API using [Postman](https://chrome.google.com/webstore/detail/postman-rest-client-packa/fhbjgbiflinjbdggehcddcbncdddomop)
-
-ENLACE A LA COLECCION EXPORTADA
+Test your API using [Postman](https://www.getpostman.com/) and the included `angular-reservation.postman_collection.json`
