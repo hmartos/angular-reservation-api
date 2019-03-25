@@ -37,6 +37,19 @@ router.get('/', function (req, res) {
     res.json({message: 'Running!'});
 });
 
+router.route('/availableDates')
+
+    //Get list of available hours for selected date
+    .get(function (req, res) {
+        var response = {};
+
+        response.availableDates = ["2017-11-13", "2017-11-14", "2017-11-15", "2017-11-16", "2017-11-17"];
+        response.status = "SUCCESS";
+        response.message = "";
+
+        res.json(response);
+    });
+
 // Reservation module routes
 router.route('/availableHours')
 
@@ -93,7 +106,7 @@ router.route('/availableHours')
 
                 res.json(response);
             });
-    })
+    });
 
 router.route('/reserve')
 
@@ -136,7 +149,7 @@ router.route('/reserve')
 
                 res.json(response);
             });
-    })
+    });
 
 
 // REGISTER OUR ROUTES -------------------------------

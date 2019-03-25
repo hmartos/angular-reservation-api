@@ -3,7 +3,7 @@
   "main": "server.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/scotch-io/node-token-authentication"
+    "url": "git://github.com/hmartos/angular-reservation-api"
   },
   "scripts": {
     "prestart": "npm install",

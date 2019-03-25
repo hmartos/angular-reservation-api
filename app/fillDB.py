@@ -31,8 +31,8 @@ def hourRange():
         availableHours.append(availableHour)
     return availableHours
 
-start_date = date(2017, 1, 1)
-end_date = date(2019, 1, 1)
+start_date = date(2019, 1, 1)
+end_date = date(2029, 1, 1)
 for single_date in dateRange(start_date, end_date):
     document = {
         "date": single_date.strftime("%Y-%m-%d"),
